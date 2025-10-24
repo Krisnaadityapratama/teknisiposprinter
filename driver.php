@@ -1,22 +1,24 @@
 <?php
 $driversFolder = 'drivers/';
+// Ambil daftar file dari folder 'drivers' dan hilangkan . dan ..
 $files = array_diff(scandir($driversFolder), array('..', '.'));
 $driverFiles = array_filter($files, function($file) {
-    return pathinfo($file, PATHINFO_EXTENSION) === 'rar';
+    // Filter untuk hanya file dengan ekstensi .rar dan .zip
+    return in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['rar', 'zip']);
 });
 
 // Ambil query pencarian
 $search = $_GET['search'] ?? '';
 if ($search) {
+    // Jika ada pencarian, filter file berdasarkan nama dan ekstensi yang diinginkan
     $driverFiles = array_filter($driverFiles, function($file) use ($search) {
-        return stripos($file, $search) !== false;
+        return stripos($file, $search) !== false && in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['rar', 'zip']);
     });
 }
 
-// Hitung total jumlah driver
+// Hitung total jumlah driver yang ditemukan
 $totalDrivers = count($driverFiles);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">

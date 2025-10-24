@@ -1,17 +1,21 @@
 <?php
 $utilityFolder = 'utility/';
+// Ambil daftar file dari folder 'utility' dan hilangkan . dan ..
 $files = array_diff(scandir($utilityFolder), array('..', '.'));
 $utilityFiles = array_filter($files, function($file) {
-    return pathinfo($file, PATHINFO_EXTENSION) === 'rar';
+    // Filter untuk hanya file dengan ekstensi .rar dan .zip
+    return in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['rar', 'zip']);
 });
 
 // Ambil query pencarian
 $search = $_GET['search'] ?? '';
 if ($search) {
+    // Jika ada pencarian, filter file berdasarkan nama dan ekstensi yang diinginkan
     $utilityFiles = array_filter($utilityFiles, function($file) use ($search) {
-        return stripos($file, $search) !== false;
+        return stripos($file, $search) !== false && in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['rar', 'zip']);
     });
 }
+
 // Hitung total jumlah utility
 $totalUtility = count($utilityFiles);
 ?>
@@ -21,7 +25,7 @@ $totalUtility = count($utilityFiles);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver - teknisiPOSprinter</title>
+    <title>Utility - teknisiPOSprinter</title>
     <link rel="shortcut icon" href="profile.png" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -65,11 +69,6 @@ $totalUtility = count($utilityFiles);
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto mt-12 px-6">
-        <!-- Back to Home Button -->
-        <!-- <div class="mb-6">
-            <a href="index.php" class="text-indigo-600 hover:text-indigo-700 text-lg">Kembali ke Beranda</a>
-        </div> -->
-
         <!-- Search Bar -->
         <div class="mb-6">
             <input type="text" id="search" placeholder="Cari utility..." class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300">
