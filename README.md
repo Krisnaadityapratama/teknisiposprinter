@@ -2,7 +2,7 @@
 
 Singkat: situs sederhana untuk menyediakan dan mendistribusikan driver, software, dan utility terkait printer POS. Pengguna dapat mencari dan mengunduh paket (.rar/.zip) melalui halaman khusus.
 
-Live: https://www.teknisiposprinter.site
+Live: https://teknisiposprinter.site/
 
 Fitur utama
 - Halaman beranda dan informasi: [index.php](index.php), [tentang.html](tentang.html)  
